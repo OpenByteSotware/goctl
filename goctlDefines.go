@@ -1,11 +1,6 @@
-package goctl
-
-import (
-	"reflect"
-)
-
 // linux ioctl defines and function definitions explained here
-// this file contains converted c header info to golang types, if not able to convert changed to functions
+// this file contains converted c header info to golang types, if not able to convert defines, then those are change
+// to function calls
 // https://www.man7.org/linux/man-pages/man2/ioctl.2.html
 // https://docs.kernel.org/6.8/userspace-api/ioctl/ioctl-number.html
 
@@ -35,7 +30,6 @@ _IO does not have a data_type parameter.
 //https://github.com/torvalds/linux/blob/master/include/uapi/asm-generic/ioctl.h
 
 // Note: this is comments from header file for ioctl found above
-
 /* ioctl command encoding: 32 bits total, command in lower 16 bits,
  * size of the parameter structure in the lower 14 bits of the
  * upper 16 bits.
@@ -45,7 +39,6 @@ _IO does not have a data_type parameter.
  * The highest 2 bits are reserved for indicating the ``access mode''.
  * NOTE: This limits the max parameter size to 16kB -1 !
  */
-
 /*
  * The following is for compatibility across the various Linux
  * platforms.  The generic ioctl numbering scheme doesn't really enforce
@@ -55,7 +48,17 @@ _IO does not have a data_type parameter.
  * below from now on.
  */
 
- const (
+package goctl
+
+import (
+	"reflect"
+)
+
+type GoctlStruct[T any] struct {
+        Value *T
+}
+
+const (
 	_IOC_NRBITS   = 8
 	_IOC_TYPEBITS = 8
 	_IOC_SIZEBITS = 14
