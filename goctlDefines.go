@@ -96,10 +96,10 @@ func _IOC(dir, typ, nr, size uint32) uint32 {
 // sizeof doesn't exist in golang, use reflections to get size of type
 func _IOC_TYPECHECK(data interface{}) uint32 { return uint32(reflect.TypeOf(data).Size()) }
 
-func _IO(typ uint32, nr uint32) uint32 { return _IOC(_IOC_NONE, typ, nr, 0) }
-func _IOR[T any](typ uint32, nr uint32, argtype T) uint32 { return _IOC(_IOC_READ, typ, nr, _IOC_TYPECHECK(argtype)) }
-func _IOW[T any](typ uint32, nr uint32, argtype T) uint32 { return _IOC(_IOC_WRITE, typ, nr, _IOC_TYPECHECK(argtype)) }
-func _IOWR[T any](typ uint32, nr uint32, argtype T) uint32 { return _IOC(_IOC_READ|_IOC_WRITE, typ, nr, _IOC_TYPECHECK(argtype)) }
+func IO(typ uint32, nr uint32) uint32 { return _IOC(_IOC_NONE, typ, nr, 0) }
+func IOR[T any](typ uint32, nr uint32, argtype T) uint32 { return _IOC(_IOC_READ, typ, nr, _IOC_TYPECHECK(argtype)) }
+func IOW[T any](typ uint32, nr uint32, argtype T) uint32 { return _IOC(_IOC_WRITE, typ, nr, _IOC_TYPECHECK(argtype)) }
+func IOWR[T any](typ uint32, nr uint32, argtype T) uint32 { return _IOC(_IOC_READ|_IOC_WRITE, typ, nr, _IOC_TYPECHECK(argtype)) }
 
 func _IOC_DIR(nr uint32) uint32 { return (nr >> _IOC_DIRSHIFT) & _IOC_DIRMASK }
 func _IOC_TYPE(nr uint32) uint32 { return (nr >> _IOC_TYPESHIFT) & _IOC_TYPEMASK }

@@ -108,16 +108,16 @@ func TestNSUser(t *testing.T) {
 func TestNSIOCTL(t *testing.T) {
     const NSIO = 0xb7
     val := int(0x100)
-    var NS_GET_OWNER_UID = _IO(NSIO, 0x4)
+    var NS_GET_OWNER_UID = IO(NSIO, 0x4)
     
-    netnsf, err := goctlOpenDevice("/proc/self/ns/user")
+    netnsf, err := GoctlOpenDevice("/proc/self/ns/user")
 
     if err != nil {
         t.Error("cannot opne device")
     }
 
-	defer goctlCloseDevice(netnsf)
-	err = goctlGetValue(netnsf, NS_GET_OWNER_UID, &val)
+	defer GoctlCloseDevice(netnsf)
+	err = GoctlGetValue(netnsf, NS_GET_OWNER_UID, &val)
     if err != nil {
         t.Error("cannot get value from device")
     }
@@ -137,7 +137,7 @@ func TestNSIOCTL(t *testing.T) {
 
         stdoutFd := int(os.Stdout.Fd())
         // Pass a pointer to the intStruct to the generic function
-        err := goctlGetStruct(stdoutFd, unix.TIOCGWINSZ, &goctlwinStruct)
+        err := GoctlGetStruct(stdoutFd, unix.TIOCGWINSZ, &goctlwinStruct)
         if err != nil {
             t.Error("cannot get value from device")
         } 
@@ -195,7 +195,7 @@ func TestNSIOCTL(t *testing.T) {
     goctlStruct := GoctlStruct[unix.Ifreq]{}
     goctlStruct.Value = ifr
 
-	err = goctlGetStruct(fd, syscall.SIOCGIFFLAGS, &goctlStruct)
+	err = GoctlGetStruct(fd, syscall.SIOCGIFFLAGS, &goctlStruct)
 
 	if err != nil {
 		t.Errorf("ioctl SIOCGIFMTU failed:%s ", err)
